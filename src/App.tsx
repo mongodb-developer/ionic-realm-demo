@@ -24,7 +24,7 @@ import './theme/variables.css';
 import RealmApolloProvider from './graphql/RealmApolloProvider';
 import { RealmAppProvider, useRealmApp } from './Realm';
 import { Login } from './pages/Login';
-export const APP_ID = 'tasktracker-gbxoc';
+export const APP_ID = 'tasktracker-uryyk';
 interface Props {
   Component: React.FC<RouteComponentProps>;
   path: string;

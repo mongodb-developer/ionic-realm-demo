@@ -1,6 +1,10 @@
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
+import { TaskItem } from "../components/TaskItem";
 import useTaskMutations from "./useTaskMutations";
+import * as Realm from "realm-web";
+import createRealmApolloClient from "./RealmApolloProvider";
+import { useRealmApp } from "../Realm";
 
 const useTasks = (project: any) => {
   const { tasks, loading } = useAllTasksInProject(project);
@@ -15,6 +19,8 @@ const useTasks = (project: any) => {
 export default useTasks;
 
 function useAllTasksInProject(project: any) {
+
+  console.log("Part", project.partition);
   const { data, loading, error } = useQuery(
     gql`
       query GetAllTasksForProject($partition: String!) {
