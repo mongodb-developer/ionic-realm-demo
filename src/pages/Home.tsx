@@ -18,11 +18,13 @@ import useTasks from '../graphql/useTasks';
 import { useRealmApp } from '../Realm';
 import './Home.css';
 
-const Home: React.FC = () => {
+const Home: React.FC = (client: any) => {
   const app = useRealmApp();
   const [currentProject] = useState(app.currentUser?.customData.memberOf[0]);
-  const { tasks, addTask, loading } = useTasks(currentProject);
+  const { tasks, addTask, loading } = useTasks(client, currentProject);
   const [presentAlert] = useIonAlert();
+
+  console.log("Client ", client);
 
   const addNewTask = () => {
     presentAlert({

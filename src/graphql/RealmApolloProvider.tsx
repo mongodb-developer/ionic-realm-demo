@@ -7,9 +7,6 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import * as Realm from "realm-web";
-import gql from 'graphql-tag';
-
-var observable = null
 
 const createRealmApolloClient = (app: Partial<Realm.App>) => {
   const fetchWithHeaders = async (uri: string, options: RequestInit) => {
@@ -38,38 +35,6 @@ export default function RealmApolloProvider({ children }: {children: JSX.Element
   useEffect(() => {
     setClient(createRealmApolloClient(app));
   }, [app]);
-
-  function observeTasks() {
-    console.log("Obs");
-    observable = client.subscribe({
-      query: gql`
-        query GetAllTasksForProject($partition: String!) {
-          tasks(query: { _partition: $partition }) {
-            _id
-            name
-            status
-          }
-        }
-      `, variables: {partition: "6144636a08aa15a527d31562"}
-    });
-    
-    observable.subscribe({
-      next(data) {
-        const tasks = data.data.tasks;
-        // Update you UI
-        console.log("next ", tasks);
-      },
-      error(value) {
-        // Notify the user of the failure
-        console.log("error " + value);
-
-      }
-    });
-  }
-  observeTasks();
-  // (async () => {
-  //   await observeTasks();
-  // })();
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
