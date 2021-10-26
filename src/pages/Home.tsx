@@ -10,7 +10,10 @@ import {
   IonTitle,
   IonToolbar,
   useIonAlert,
+  IonRefresher,
+  IonRefresherContent
 } from '@ionic/react';
+import { RefresherEventDetail } from '@ionic/core';
 import { add } from 'ionicons/icons';
 import { useState } from 'react';
 import { TaskItem } from '../components/TaskItem';
@@ -39,6 +42,12 @@ const Home: React.FC = () => {
     });
   };
 
+  const doRefresh = (event: CustomEvent<RefresherEventDetail>) => {
+    console.log("Refresh");
+    window.location.reload();
+    event.detail.complete();
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -52,6 +61,9 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Tasks</IonTitle>
