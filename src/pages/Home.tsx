@@ -43,9 +43,8 @@ const Home: React.FC = () => {
   };
 
   const doRefresh = (event: CustomEvent<RefresherEventDetail>) => {
-    console.log("Refresh");
-    window.location.reload();
-    event.detail.complete();
+    window.location.reload(); // reload the whole page
+    event.detail.complete();  // we signal the loading indicator to hide
   };
 
   return (

@@ -19,9 +19,14 @@ export function TaskItem(task: {
 }) {
   const app = useRealmApp();
   const [project] = useState(app.currentUser?.customData.memberOf[0]);
-  const { updateTask } = useTaskMutations(project);
+  const { updateTask: updateTask, deleteTask: deleteTask } = useTaskMutations(project);
   const slidingRef = useRef<HTMLIonItemSlidingElement | null>(null);
   const [presentAlert] = useIonAlert();
+
+  const deleteTaskSelected = () => {
+    slidingRef.current?.close();  // close sliding menu
+    deleteTask(task);             // delete task
+  };
 
   const toggleStatus = () => {
     presentAlert({
@@ -73,6 +78,9 @@ export function TaskItem(task: {
       </IonItem>
       <IonItemOptions side="end">
         <IonItemOption onClick={toggleStatus}>Status</IonItemOption>
+      </IonItemOptions>
+      <IonItemOptions side="start">
+        <IonItemOption onClick={deleteTaskSelected} color="danger">Delete</IonItemOption>
       </IonItemOptions>
     </IonItemSliding>
   );
